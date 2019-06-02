@@ -4,6 +4,7 @@ import com.codecool.web.dao.UserDao;
 import com.codecool.web.dao.database.DatabaseUserDao;
 import com.codecool.web.model.User;
 import com.codecool.web.service.LoginService;
+import com.codecool.web.service.exception.ServiceException;
 import com.codecool.web.service.simple.SimpleLoginSerivce;
 
 import javax.servlet.ServletException;
@@ -33,6 +34,8 @@ public class LoginServlet extends AbstractServlet {
             sendMessage(resp, HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }catch (SQLException e){
             handleSqlError(resp, e);
+        } catch (ServiceException e) {
+            e.printStackTrace();
         }
     }
 }
