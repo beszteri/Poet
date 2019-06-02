@@ -81,10 +81,6 @@ function onOtherResponse(targetEl, xhr) {
     }
 }
 
-function hasAuthorization() {
-    return localStorage.getItem('user') !== null;
-}
-
 function setAuthorization(user) {
     return localStorage.setItem('user', JSON.stringify(user));
 }
@@ -113,9 +109,18 @@ function onLoad() {
     const logoutButtonEl = document.getElementById('logout-button');
     logoutButtonEl.addEventListener('click', onLogoutButtonClicked);
 
-    if (hasAuthorization()) {
-        onProfileLoad(getAuthorization());
-    }
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', function() {
+        if (this.status === OK) {
+            onProfileLoad(getAuthorization());
+        } else {
+            clearMessages();
+            showContents(['login-content']);
+        }
+    });
+    xhr.addEventListener('error', onNetworkError);
+    xhr.open('GET', 'protected/profile');
+    xhr.send();
 }
 
 document.addEventListener('DOMContentLoaded', onLoad);

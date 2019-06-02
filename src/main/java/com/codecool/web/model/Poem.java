@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class Poem extends AbstractModel{
 
-    private final int poetId;
+    private final int userId;
     private final String title;
     private final String content;
 
-    public Poem(int id, int poetId, String title, String content) {
+    public Poem(int id, int userId, String title, String content) {
         super(id);
-        this.poetId = poetId;
+        this.userId = userId;
         this.title = title;
         this.content = content;
     }
 
-    public int getPoetId() {
-        return poetId;
+    public int getUserId() {
+        return userId;
     }
 
     public String getTitle() {
@@ -33,13 +33,13 @@ public class Poem extends AbstractModel{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Poem poem = (Poem) o;
-        return poetId == poem.poetId &&
+        return userId == poem.userId &&
             Objects.equals(title, poem.title) &&
             Objects.equals(content, poem.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), poetId, title, content);
+        return Objects.hash(super.hashCode(), userId, title, content);
     }
 }
